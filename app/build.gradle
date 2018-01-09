@@ -7,7 +7,7 @@ android {
     defaultConfig {
         applicationId "com.guo.duoduo.wifidetective"
         minSdkVersion 15
-        versionCode 26
+        versionCode 21
         versionName "1.0"
     }
     buildTypes {

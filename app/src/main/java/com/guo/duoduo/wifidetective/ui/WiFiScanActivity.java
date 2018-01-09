@@ -3,8 +3,11 @@ package com.guo.duoduo.wifidetective.ui;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.List;
 
+import android.content.Context;
 import android.content.IntentFilter;
+import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Message;
@@ -23,6 +26,7 @@ import com.guo.duoduo.wifidetective.ui.adapter.WiFiScanAdapter;
 import com.guo.duoduo.wifidetective.util.Constant;
 import com.guo.duoduo.wifidetective.util.NetworkUtil;
 import com.guo.duoduo.wifidetective.ui.view.StatusBarCompat;
+import com.guo.duoduo.wifidetective.util.RouterComparator;
 import com.guo.duoduo.wifidetective.util.ToastUtils;
 
 
@@ -37,7 +41,11 @@ public class WiFiScanActivity extends BaseActivity
     private RecyclerView mScanRecycleView;
     private WiFiScanAdapter mWiFiScanAdapter;
     private ArrayList<RouterInfo> mRouterInfo = new ArrayList<>();
+    private WifiManager mWiFiManager;
+    private List<ScanResult> mScanResult;
 
+    private SparseArray<RouterList> mRoutersInDifferentChannel;
+    private RouterComparator mRouterComparator;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -61,7 +69,9 @@ public class WiFiScanActivity extends BaseActivity
 
     private void initWiFi()
     {
-        mWifiManager = NetworkUtil.getWifiManager(getApplicationContext());
+        mWifiManager = (WifiManager)this.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+//        mScanResult = mWifiManager.getScanResults();
+        //NetworkUtil.getWifiManager(getApplicationContext());
         if (mWifiManager == null)
         {
             Log.d(tag, "wifi error");
